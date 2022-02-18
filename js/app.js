@@ -37,13 +37,15 @@ function calculateResults() {
 function errorBlc(error) {
   document.getElementById("output").style.display = "none";
   document.getElementById("loader").style.display = "none";
+
   const errorMessage = document.createElement("div");
   const card = document.querySelector(".card");
   const heading = document.querySelector(".heading");
+
   errorMessage.className = "alert alert-danger";
   errorMessage.appendChild(document.createTextNode(error));
-  card.appendChild(errorMessage);
-  card.appendChild(heading);
+  card.appendChild(errorMessage, heading);
+
   setTimeout(clearError, 2500);
 };
 
