@@ -1,8 +1,13 @@
-const form = document.querySelector("#loan-form");
+document.getElementById("loan-form").addEventListener("submit", function (e) {
+  document.getElementById("output").style.display = "none";
+  document.getElementById("loader").style.display = "block";
 
-form.addEventListener("submit", calculateResults);
+  setTimeout(calculateResults, 1000);
 
-function calculateResults(e) {
+  e.preventDefault();
+});
+
+function calculateResults() {
   const amount = document.querySelector("#amount");
   const interest = document.querySelector("#interest");
   const years = document.querySelector("#years");
@@ -22,9 +27,26 @@ function calculateResults(e) {
     monthlyPayment.value = monthly.toFixed(2);
     totalPayment.value = (monthly * calculatedPayments).toFixed(2);
     totalInterest.value = (monthly * calculatedPayments - principal).toFixed(2);
+    document.getElementById("output").style.display = "block";
+    document.getElementById("loader").style.display = "none";
   } else {
-    alert("Заполните все поля!");
+    errorBlc("Заполните все поля!");
   }
+};
 
-  e.preventDefault();
-}
+function errorBlc(error) {
+  document.getElementById("output").style.display = "none";
+  document.getElementById("loader").style.display = "none";
+  const errorMessage = document.createElement("div");
+  const card = document.querySelector(".card");
+  const heading = document.querySelector(".heading");
+  errorMessage.className = "alert alert-danger";
+  errorMessage.appendChild(document.createTextNode(error));
+  card.appendChild(errorMessage);
+  card.appendChild(heading);
+  setTimeout(clearError, 2500);
+};
+
+function clearError() {
+  document.querySelector('.alert').remove();
+};
